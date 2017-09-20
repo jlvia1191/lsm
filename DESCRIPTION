@@ -1,0 +1,21 @@
+Package: lsm
+Type: Package
+Title: Estimation of the log likelihood of the saturated model
+Version: 0.1.0
+Date: 2017-06-22
+Authors@R: person("Humberto", "Llinas", role = c("aut"))
+  person("Omar", "Fabregas", role = c("aut"))
+  person("Jorge", "Villalba", email = "jlvia1191@gmail.com", role = c("aut", "cre"))
+Maintainer: Jorge Villalba <jlvia1191@gmail.com>
+Description: This package calculates the estimation of the log likelihood of the saturated model, 
+  when the values of the outcome variable are either 0 or 1.
+Depends: R (>= 3.1.0),stats
+Imports: reshape2
+Encoding: UTF-8
+URL: https://github.com/jlvia1191/lsm
+License: MIT + file LICENSE 
+LazyData: TRUE
+RoxygenNote: 6.0.1
+Collate:
+    'lsm.R'
+    
