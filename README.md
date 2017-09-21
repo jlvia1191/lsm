@@ -18,10 +18,10 @@ References
 
 \[2\] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
 
-Author
+Author(s)
 ------
 
-Humberto Llinas \[aut, cre\], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba \[cre\], Unicolombo, Cartagena-Colombia \\ Omar Fabregas \[cre\], Universidad del Norte, Barranquilla-Colombia.
+Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba [aut,cre], Unicolombo, Cartagena-Colombia \\ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia.
 
 Installation
 ------------

@@ -37,9 +37,9 @@ De Estadistica,29(2), 242-244.
 New York: John Wiley &amp; Sons, Incorporated.
 
 
-Author
+Author(s)
 ------
- Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \ Jorge Villalba [aut,cre], Unicolombo, Cartagena-Colombia \ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia.
+ Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba [aut, cre], Unicolombo, Cartagena-Colombia \\ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia.
 
 Installation
 ------------
