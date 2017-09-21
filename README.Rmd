@@ -39,8 +39,7 @@ New York: John Wiley &amp; Sons, Incorporated.
 
 Author
 ------
-Humberto Llinas [aut, cre], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba [cre], Unicolombo, Cartagena-Colombia \\ Omar Fabregas [cre], Universidad del Norte, Barranquilla-Colombia.
-
+ Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \ Jorge Villalba [aut,cre], Unicolombo, Cartagena-Colombia \ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia.
 
 Installation
 ------------

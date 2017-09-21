@@ -18,7 +18,7 @@ Value of the estimation.
 This package calculates the estimation of the log likelihood of the saturated model, when the values of the outcome variable are either 0 or 1.
 }
 \details{
-The saturated model is characterized by the assumptions 1 and 2 presented in section 5 by Llinas [1].  The variable of interest Y can asume 2 levels 0 or 1. We define P_j:= P(Y=1| j) the probability that Y takes the value of 1 in the population j=1, .J. Taking into account the annotations n_j (size of the population j) and Z_j (number of success in the population j), introduced in that paper, in the saturated model, the ML-estimations of  P_j are Z_j/n_j. Furthermore, the logarithm of the function of maximum likelihood would be L(P) =Sum (from j=1 to J) of [Z_j ln P_j + (n_j - Z_j) ln(1 - P_j)], where P=(P_1, ..P_J).  It is also fulfilled that L(P) < 0 for  0 <P_j < 1.
+The saturated model is characterized by the assumptions 1 and 2 presented in section 5 by Llinas [1].
 }
 \examples{
  x1 <- c(68, 72, 68, 76, 69, 71, 68, 61, 69, 68)
@@ -28,8 +28,10 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
  lsm(y~x1+x2, data)
 }
 \references{
-LLINAS H., Precisiones en la teoria de modelos logisticos. Revista Colombiana de Estadistica, vol. 29, No. 2, pp. 293-265, 2006.
+[1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
+
+[2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley &amp; Sons, Incorporated.
 }
 \author{
-Humberto Llinas [aut, cre], Universidad del Norte, Barranquilla-Colombia \ Jorge Villalba [cre], Unicolombo, Cartagena-Colombia \ Omar Fabregas [cre], Universidad del Norte, Barranquilla-Colombia.
+Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \ Jorge Villalba [cre, aut], Unicolombo, Cartagena-Colombia \ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia.
 }
