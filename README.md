@@ -40,7 +40,7 @@ Example Usage
  y <- c (0, 1, 0, 0, 1, 0, 0, 1, 0, 1)
  data <- data.frame (y, x1, x2)
  library(lsm)
- lsm(y~x1+x2, data)
+ lsm(y ~ x1 + x2, data)
  $`log likelihood`
  [1] -1.3863
 
@@ -58,7 +58,7 @@ y <- c(1,   0,  1,  0,  1,  1,  1,  1,  0,  0,  1,  1)
   data <- data.frame (y, x1, x2, x3, x4, x5) ;data
 
   library(lsm)
-  lsm(y ~ x1+x2+x3+x4+x5, data)
+  lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
   $`log likelihood`
   [1] -7.4547
  
