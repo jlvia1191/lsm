@@ -1,10 +1,10 @@
 # lsm.R
 
-#' @title Estimation of the log likelihood of the saturated model
-#' @description This package calculates the estimation of the log likelihood of the saturated model, when the values of the outcome variable are either 0 or 1.
+#' @title Estimation of the log Likelihood of the Saturated Model
+#' @description When the values of the outcome variable Y are either 0 or 1, the function lsm calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas [1] in section 2.3 through the assumptions 1 and 2. The function "LogLik" works (almost perfectly) when the mumber of independent variables K is high, but for small K it calculates wrong values. For this reason, when Y is dichotomous and the data are grouped or ungrouped, it is recommended the function lsm because it works very well for all K.
 #' @param formula An expression of the form y ~ model, where y is the outcome variable (binary or dichotomous: its values are 0 or 1).
-#' @param data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which dsm is called.
-#' @return Value of the estimation.
+#' @param data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lsm is called.
+#' @return  Value of the estimation and  the total of the population.
 #' @details The saturated model is characterized by the assumptions 1 and 2 presented in section 5 by Llinas [1].
 #' @references [1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
 #' @references [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley &amp; Sons, Incorporated.
@@ -14,6 +14,16 @@
 #'  y <- c (0, 1, 0, 0, 1, 0, 0, 1, 0, 1)
 #'  data <- data.frame (y, x1, x2)
 #'  lsm(y~x1+x2, data)
+#'
+#'   # Example
+#'   y <- c(1,	0,	1,	0,	1,	1,	1,	1,	0,	0,	1,	1)
+#'  x1 <-	c(2,	2,	2,	5,	5,	5,	5,	8,	8,	11,	11,	11)
+#'  x2 <-	c(3,	3,	3,	6,	6,	6,	6,	9,	9,	12,	12,	12)
+#'  x3 <-	c(4,	4,	4,	7,	7,	7,	7,	10,	10,	13,	13,	13)
+#'  x5 <-	c(1,	1,	1,	9,	9,	9,	9,	4,	4,	2,	2,	2)
+#'  x4 <-	c(5,	5,	5,	6,	6,	6,	6,	7,	7,	8,	8,	8)
+#'  data <- data.frame (y, x1, x2, x3, x4, x5) ;data
+#'  lsm(y ~ x1+x2+x3+x4+x5, data)
 #' @export
 #' @import stats
 #' @import reshape2
@@ -29,7 +39,7 @@ lsm <- function(formula,data){
 
   sat <- sum(ifelse ( (pj) == 0 | (pj) == 1, 0, zj * log (pj) + (nj-zj) *log (1-pj) ))
 
-  return(sat)
+  return( list( "log likelihood" = round(sat,4) , "populations" = length(z)-1))
 
 }
 
