@@ -25,17 +25,17 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
  x2 <- c(0.00, 55.90, 0.00, 20.00, 55.90, 0.00, 27.20, 24.00, 0.00, 27.20)
  y <- c (0, 1, 0, 0, 1, 0, 0, 1, 0, 1)
  data <- data.frame (y, x1, x2)
- lsm(y~x1+x2, data)
+ lsm(y ~ x1 + x2, data)
 
-  # Example
-  y <- c(1,	0,	1,	0,	1,	1,	1,	1,	0,	0,	1,	1)
- x1 <-	c(2,	2,	2,	5,	5,	5,	5,	8,	8,	11,	11,	11)
- x2 <-	c(3,	3,	3,	6,	6,	6,	6,	9,	9,	12,	12,	12)
- x3 <-	c(4,	4,	4,	7,	7,	7,	7,	10,	10,	13,	13,	13)
- x5 <-	c(1,	1,	1,	9,	9,	9,	9,	4,	4,	2,	2,	2)
- x4 <-	c(5,	5,	5,	6,	6,	6,	6,	7,	7,	8,	8,	8)
+# Other example.
+  y <- c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1)
+ x1 <-	c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11)
+ x2 <-	c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12)
+ x3 <-	c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13)
+ x5 <-	c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2)
+ x4 <-	c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8)
  data <- data.frame (y, x1, x2, x3, x4, x5) ;data
- lsm(y ~ x1+x2+x3+x4+x5, data)
+ lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
 }
 \references{
 [1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
@@ -43,5 +43,5 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
 [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley &amp; Sons, Incorporated.
 }
 \author{
-Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \ Jorge Villalba [cre, aut], Unicolombo, Cartagena-Colombia \ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia.
+Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba [cre, aut], Unicolombo, Cartagena-Colombia.
 }

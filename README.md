@@ -18,7 +18,9 @@ References
 Author(s)
 ---------
 
-Humberto Llinas \[aut\], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba \[aut, cre\], Unicolombo, Cartagena-Colombia \\ Omar Fabregas \[aut\], Universidad del Norte, Barranquilla-Colombia.
+Humberto Llinas \[aut\], Universidad del Norte, Barranquilla-Colombia\\
+Omar Fabregas \[aut\], Universidad del Norte, Barranquilla-Colombia\\
+Jorge Villalba \[aut, cre\], Unicolombo, Cartagena-Colombia.
 
 Installation
 ------------
@@ -26,15 +28,7 @@ Installation
 ``` r
 library(devtools)
 install_github("jlvia1191/lsm")
-#> Downloading GitHub repo jlvia1191/lsm@master
-#> from URL https://api.github.com/repos/jlvia1191/lsm/zipball/master
-#> Installing lsm
-#> "C:/PROGRA~1/R/R-33~1.3/bin/x64/R" --no-site-file --no-environ --no-save  \
-#>   --no-restore --quiet CMD INSTALL  \
-#>   "C:/Users/jorgeR/AppData/Local/Temp/Rtmp6jrM7A/devtoolsa6c62ea2ee2/jlvia1191-lsm-1f29ada"  \
-#>   --library="C:/Users/jorgeR/Documents/R/win-library/3.3"  \
-#>   --install-tests
-#> 
+
 ```
 
 Example Usage
@@ -47,7 +41,11 @@ Example Usage
  data <- data.frame (y, x1, x2)
  library(lsm)
  lsm(y~x1+x2, data)
-#> [1] -1.386294
+ $`log likelihood`
+ [1] -1.3863
+
+ $populations
+ [1] 8
 ```
 
 ``` r
@@ -58,20 +56,12 @@ y <- c(1,   0,  1,  0,  1,  1,  1,  1,  0,  0,  1,  1)
   x5 <- c(1,    1,  1,  9,  9,  9,  9,  4,  4,  2,  2,  2)
   x4 <- c(5,    5,  5,  6,  6,  6,  6,  7,  7,  8,  8,  8)
   data <- data.frame (y, x1, x2, x3, x4, x5) ;data
-#>    y x1 x2 x3 x4 x5
-#> 1  1  2  3  4  5  1
-#> 2  0  2  3  4  5  1
-#> 3  1  2  3  4  5  1
-#> 4  0  5  6  7  6  9
-#> 5  1  5  6  7  6  9
-#> 6  1  5  6  7  6  9
-#> 7  1  5  6  7  6  9
-#> 8  1  8  9 10  7  4
-#> 9  0  8  9 10  7  4
-#> 10 0 11 12 13  8  2
-#> 11 1 11 12 13  8  2
-#> 12 1 11 12 13  8  2
-   library(lsm)
+
+  library(lsm)
   lsm(y ~ x1+x2+x3+x4+x5, data)
-#> [1] -7.45472
+  $`log likelihood`
+  [1] -7.4547
+ 
+  $populations
+  [1] 4
 ```
