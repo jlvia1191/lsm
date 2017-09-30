@@ -7,7 +7,7 @@
 #' @return  Value of the estimation and  the total of the population.
 #' @details The saturated model is characterized by the assumptions 1 and 2 presented in section 2.3 by Llinas (2006, ISSN:2389-8976).
 #' @references [1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
-#' @references [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley &amp; Sons, Incorporated.
+#' @references [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
 #' @author Humberto Llinas Solano [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas Cera [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba Acevedo [cre, aut], Unicolombo, Cartagena-Colombia.
 #' @examples  x1 <- c(68, 72, 68, 76, 69, 71, 68, 61, 69, 68)
 #'  x2 <- c(0.00, 55.90, 0.00, 20.00, 55.90, 0.00, 27.20, 24.00, 0.00, 27.20)
@@ -43,17 +43,13 @@ lsm <- function(formula,data){
   x <- na
   class(x) <- "lsm"
   x
-
-  print.lsm <- function(x, ...){
-    cat("\nlog_Likelihood:\n")
-    print(x$"log_Likelihood")
-    cat("\npopulations:\n")
-    print(x$populations)
-  }
-
 }
-
-
+print.lsm <- function(x, ...){
+  cat("\nlog_Likelihood:\n")
+  print(x$"log_Likelihood")
+  cat("\npopulations:\n")
+  print(x$populations)
+}
 
 
 
