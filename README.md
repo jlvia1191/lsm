@@ -46,9 +46,6 @@ Example Usage
  
  $populations
  [1] 8
- 
- attr(,"class")
- [1] "lsm"
 ```
 
 \# Other example.
@@ -67,9 +64,6 @@ Example Usage
  
  $populations
  [1] 4
- 
- attr(,"class")
- [1] "lsm"
   
 ## For more ease, use the following notation.
   
@@ -79,7 +73,4 @@ Example Usage
  
  $populations
  [1] 4
- 
- attr(,"class")
- [1] "lsm"
 ```
