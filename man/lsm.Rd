@@ -28,7 +28,8 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
  lsm(y ~ x1 + x2, data)
 
 
-# Other example.
+# Other case.
+
   y <- c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1)
  x1 <-	c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11)
  x2 <-	c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12)
@@ -43,7 +44,7 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
 
 }
 \references{
-[1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
+[1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models. Revista Colombiana De Estadistica,29(2), 242-244.
 
 [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
 }

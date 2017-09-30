@@ -11,7 +11,7 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
 References
 ----------
 
-\[1\] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
+\[1\] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models. Revista Colombiana De Estadistica,29(2), 242-244.
 
 \[2\] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
 
@@ -41,17 +41,17 @@ Example Usage
  data <- data.frame (y, x1, x2)
 
  lsm(y ~ x1 + x2, data)
-#> $log_Likelihood
-#> [1] -1.3863
-#> 
-#> $populations
-#> [1] 8
-#> 
-#> attr(,"class")
-#> [1] "lsm"
+ $log_Likelihood
+ [1] -1.3863
+ 
+ $populations
+ [1] 8
+ 
+ attr(,"class")
+ [1] "lsm"
 ```
 
-\# Other.
+\# Other example.
 
 ``` r
    y <- c(1,    0, 1,   0,  1,  1,  1,  1,  0,  0,  1,  1)
@@ -62,10 +62,24 @@ Example Usage
   x4 <- c(5, 5, 5,  6,  6,  6,  6,  7,  7,  8,  8,  8)
   data <- data.frame (y, x1, x2, x3, x4, x5) 
   lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
-
+ $log_Likelihood
+ [1] -7.4547
+ 
+ $populations
+ [1] 4
+ 
+ attr(,"class")
+ [1] "lsm"
   
 ## For more ease, use the following notation.
   
   lsm(y~., data)
-
+ $log_Likelihood
+ [1] -7.4547
+ 
+ $populations
+ [1] 4
+ 
+ attr(,"class")
+ [1] "lsm"
 ```
