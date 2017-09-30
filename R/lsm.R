@@ -24,7 +24,7 @@
 #'  x3 <-	c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13)
 #'  x5 <-	c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2)
 #'  x4 <-	c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8)
-#'  data <- data.frame (y, x1, x2, x3, x4, x5) ;data
+#'  data <- data.frame (y, x1, x2, x3, x4, x5)
 #'  lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
 #'
 #' ## For more ease, use the following notation.
@@ -34,22 +34,15 @@
 #' @import stats
 
 
-lsm <- function(formula,data){
+lsm <- function(formula,data)
+{
   L <- as.formula(formula)
   mf <- model.frame(formula = L, data = data)
   res <- do.call(rbind, tapply(mf[, 1], t(apply(t(t(mf[, -1])), 1, paste0,      collapse = "")), function(x) c(p = mean(x), z = sum(x), n = length(x))))
   sj <- (res[, 2]*log(res[, 1]) + (res[, 3] - res[, 2])*log(1 - res[, 1]))
   sat <- round(sum(ifelse ( (res[, 1]) == 0 | (res[, 1]) == 1, 0, sj)), 4)
   na <- list(log_Likelihood = sat, populations = length(res) / 3)
-  x <- na
-  class(x) <- "lsm"
-  x
-}
-print.lsm <- function(x, ...){
-  cat("\nlog_Likelihood:\n")
-  print(x$"log_Likelihood")
-  cat("\npopulations:\n")
-  print(x$populations)
+  return(na)
 }
 
 

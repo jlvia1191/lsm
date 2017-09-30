@@ -36,7 +36,7 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
  x3 <-	c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13)
  x5 <-	c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2)
  x4 <-	c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8)
- data <- data.frame (y, x1, x2, x3, x4, x5) ;data
+ data <- data.frame (y, x1, x2, x3, x4, x5)
  lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
 
 ## For more ease, use the following notation.
