@@ -9,16 +9,16 @@ lsm(formula, data)
 \arguments{
 \item{formula}{An expression of the form y ~ model, where y is the outcome variable (binary or dichotomous: its values are 0 or 1).}
 
-\item{data}{an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lsm is called.}
+\item{data}{an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lsm() is called.}
 }
 \value{
 Value of the estimation and  the total of the population.
 }
 \description{
-When the values of the outcome variable Y are either 0 or 1, the function lsm calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas [1] in section 2.3 through the assumptions 1 and 2. The function "LogLik" works (almost perfectly) when the mumber of independent variables K is high, but for small K it calculates wrong values. For this reason, when Y is dichotomous and the data are grouped or ungrouped, it is recommended the function lsm because it works very well for all K.
+When the values of the outcome variable Y are either 0 or 1, the function lsm() calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas (2006, ISSN:2389-8976) in section 2.3 through the assumptions 1 and 2. The function LogLik() works (almost perfectly) when the mumber of independent variables K is high, but for small K it calculates wrong values in some cases. For this reason, when Y is dichotomous and the data are grouped or ungrouped, it is recommended the function lsm() because it works very well for all K.
 }
 \details{
-The saturated model is characterized by the assumptions 1 and 2 presented in section 5 by Llinas [1].
+The saturated model is characterized by the assumptions 1 and 2 presented in section 2.3 by Llinas (2006, ISSN:2389-8976).
 }
 \examples{
  x1 <- c(68, 72, 68, 76, 69, 71, 68, 61, 69, 68)
@@ -26,6 +26,7 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
  y <- c (0, 1, 0, 0, 1, 0, 0, 1, 0, 1)
  data <- data.frame (y, x1, x2)
  lsm(y ~ x1 + x2, data)
+
 
 # Other example.
   y <- c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1)
@@ -36,6 +37,10 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
  x4 <-	c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8)
  data <- data.frame (y, x1, x2, x3, x4, x5) ;data
  lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
+
+## For more ease, use the following notation.
+ lsm(y~., data)
+
 }
 \references{
 [1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models.Revista Colombiana De Estadistica,29(2), 242-244.
@@ -43,5 +48,5 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
 [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley &amp; Sons, Incorporated.
 }
 \author{
-Humberto Llinas [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba [cre, aut], Unicolombo, Cartagena-Colombia.
+Humberto Llinas Solano [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas Cera [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba Acevedo [cre, aut], Unicolombo, Cartagena-Colombia.
 }
