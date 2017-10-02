@@ -1,7 +1,8 @@
 # lsm.R
 
 #' @title Estimation of the log Likelihood of the Saturated Model
-#' @description When the values of the outcome variable Y are either 0 or 1, the function lsm() calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas (2006, ISSN:2389-8976) in section 2.3 through the assumptions 1 and 2. The function LogLik() works (almost perfectly) when the number of independent variables K is high, but for small K it calculates wrong values in some cases. For this reason, when Y is dichotomous and the data are grouped or ungrouped, it is recommended to use function lsm() because it works very well for all K.
+#' @description When the values of the outcome variable Y are either 0 or 1, the function lsm() calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas (2006, ISSN:2389-8976) in section 2.3 through the assumptions 1 and 2. The function LogLik() works (almost perfectly) when the number of independent variables K is high, but for small K it calculates wrong values in some cases. For this reason, when Y is dichotomous and the data are grouped in J populations, it is recommended to use the function lsm() because it works very well for all K.
+
 #' @param formula An expression of the form y ~ model, where y is the outcome variable (binary or dichotomous: its values are 0 or 1).
 #' @param data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lsm() is called.
 #' @return  Value of the estimation and  the total of the population.
@@ -33,8 +34,8 @@
 #'  x1 <-	c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11)
 #'  x2 <-	c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12)
 #'  x3 <-	c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13)
-#'  x5 <-	c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2)
-#'  x4 <-	c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8)
+#'  x4 <-	c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2)
+#'  x5 <-	c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8)
 #'
 #'   data <- data.frame (y, x1, x2, x3, x4, x5)
 #'  lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
