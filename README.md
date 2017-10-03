@@ -65,7 +65,7 @@ Example Usage
  [1] 6
 ```
 
-\# Other example.
+\# Other case.
 
 ``` r
    y <- c(1,    0, 1,   0,  1,  1,  1,  1,  0,  0,  1,  1)
@@ -86,9 +86,9 @@ Example Usage
 ## For more ease, use the following notation.
   
   lsm(y~., data)
-#> $log_Likelihood
-#> [1] -7.4547
-#> 
-#> $populations
-#> [1] 4
+ $log_Likelihood
+ [1] -7.4547
+ 
+ $populations
+ [1] 4
 ```
