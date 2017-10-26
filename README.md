@@ -1,5 +1,8 @@
-lsm
----
+
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/lsm)](https://cran.r-project.org/package=lsm)
+
+Welcome to the *lsm* package!
+=================================
 
  When the values of the outcome variable Y are either 0 or 1, the function lsm() calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas (2006, ISSN:2389-8976) in section 2.3 through the assumptions 1 and 2. The function LogLik() works (almost perfectly) when the number of independent variables K is high, but for small K it calculates wrong values in some cases. For this reason, when Y is dichotomous and the data are grouped in J populations, it is recommended to use the function lsm() because it works very well for all K.
 
