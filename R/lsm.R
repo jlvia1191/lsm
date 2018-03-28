@@ -48,9 +48,9 @@
 #' @import stats
 
  lsm <- function(formula,data) {
-    L <-as.formula(formula)
-    mf <- model.frame(formula = L, data = data)
-    res <-do.call(rbind, (tapply(as.vector(mf[, 1]), t(apply((mf[, -1,drop =FALSE]), 1, paste0,collapse = "")),function(x) c(z = sum(as.numeric(x)), n = length(as.numeric(x)),p = mean(as.numeric(x))))))
+
+    mf <- model.frame(formula = formula, data = data)
+    res <-do.call(rbind, (tapply(as.vector(mf[, 1]), t(apply((mf[, -1,drop =FALSE]), 1, paste0,collapse = "-")),function(x) c(z = sum(as.numeric(x)), n = length(as.numeric(x)),p = mean(as.numeric(x))))))
     sj <- (res[, 1] * log(res[, 3]) + (res[, 2] - res[, 1]) * log(1 - res[, 3]))
     sat <- sum(ifelse ((res[, 3]) == 0 | (res[, 3]) == 1, 0, sj))
     na <- list(log_Likelihood = sat, populations = length(res) / 3)
