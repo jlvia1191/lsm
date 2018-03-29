@@ -10,8 +10,18 @@
 #' @references [1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models. Revista Colombiana De Estadistica,29(2), 242-244.
 #' @references [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
 #' @author Humberto Llinas Solano [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas Cera [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba Acevedo [cre, aut], Unicolombo, Cartagena-Colombia.
-#' @examples
-#'  y	<- c(0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1)
+#'@examples
+#' # Hosmer, D. (2013) page 3: Age and coranary Heart Disease (CHD) Status of 20 subjects:
+#'
+#' AGE <- c(20, 23, 24, 25, 25, 26, 26, 28, 28, 29, 30, 30, 30, 30, 30, 30, 30, 32, 33, 33)
+#' CHD <- c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0)
+#'
+#'  data <- data.frame (CHD, AGE)
+#' lsm(CHD ~ AGE , data)
+#'
+#' # Other case.
+#'
+#'y	<- c(0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1)
 #'  x1 <- c(2, 2, 2, 2,	2, 5, 5, 5, 5, 6, 6, 6, 8, 8, 11, 11, 11, 1)
 #'  x2 <- c(3, 3, 3, 3,	3, 6,	6, 6, 6, 8, 8, 8, 9, 9, 12,	12,	12,	12)
 #'  x3 <- c(4, 4, 4, 4,	4, 7,	7, 7, 7, 9, 9, 9, 10, 10, 13,	13,	13,	13)
@@ -29,7 +39,7 @@
 #' ## For more ease, use the following notation.
 #'  lsm(y~., data)
 #'
-#' # Other case.
+#' ## Other case.
 #'
 #'   y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
 #'  x1 <- as.factor(c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11))
