@@ -78,6 +78,8 @@ lsm<- function(formula , data )
 
 }
 
+
+#' @export
 print.lsm <- function(x, ...)
 {
   cat("\nCall:\n")
