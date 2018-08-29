@@ -19,7 +19,7 @@ Welcome to the *lsm* package!
 =================================
 
 
- When the values of the outcome variable Y are either 0 or 1, the function lsm() calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas (2006, ISSN:2389-8976) in section 2.3 through the assumptions 1 and 2. If Y is dichotomous and the data are grouped in J populations, it is recommended to use the function lsm() because it works very well for all K.
+ When the values of the outcome variable Y are either 0 or 1, the function \code{lsm()} calculates the estimation of the log likelihood in the saturated model. This model is characterized by Llinas (2006, ISSN:2389-8976) in section 2.3 through the assumptions 1 and 2. If \code{Y} is dichotomous and the data are grouped in J populations, it is recommended to use the function \code{lsm()} because it works very well for all \code{K}.
 
 Details
 ------
@@ -46,7 +46,7 @@ Installation
 
 ``` {r}
 library(devtools)
-install_github("jlvia1191/ls")
+install_github("jlvia1191/lsm")
 ```
 
 Example Usage
@@ -55,7 +55,7 @@ Example Usage
  Hosmer, D. (2013) page 3: Age and coranary Heart Disease (CHD) Status of 20 subjects:
 
 ```{r}
-library(lsm2)
+library(lsm)
 
   AGE <- c(20,23,24,25,25,26,26,28,28,29,30,30,30,30,30,30,30,32,33,33)
   CHD <- c(0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0)
@@ -82,7 +82,7 @@ library(lsm2)
  x10 <- c(5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8)
  
  data <- data.frame (y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
- lsm2(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10, data)
+ lsm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10, data)
  
 ## For more ease, use the following notation.
  

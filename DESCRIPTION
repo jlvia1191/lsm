@@ -2,7 +2,7 @@ Package: lsm
 Type: Package
 Title: Estimation of the log Likelihood of the Saturated Model
 Version: 0.1.7
-Date: 2018-08-29
+Date: 2018-08-30
 Authors@R: c(person("Humberto", "Llinas", role = c("aut")),
   person("Omar", "Fabregas", role = c("aut")),
   person("Jorge", "Villalba", email = "jlvia1191@gmail.com", role = c("aut", "cre")))
