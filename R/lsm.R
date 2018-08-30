@@ -99,8 +99,6 @@ lsm <- function(formula , data)
   mj <- nj * pj
   Vj <- nj * vj
   V <- diag(vj)
-  colnames(V) <- names(Vj)
-  rownames(V) <- names(Vj)
   sp <- as.matrix((zj - nj * pj)/ vj)
   ip <- diag(nj / vj)
   Zj <- (zj - nj * pj) / sqrt(nj * vj)
