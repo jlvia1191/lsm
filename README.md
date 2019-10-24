@@ -26,10 +26,22 @@ Installation
 ------------
 
 ``` r
+install.packages("devtools")
 library(devtools)
 install_github("jlvia1191/lsm")
 
 ```
+De forma alternativa
+
+``` r
+install.packages("devtools")
+library(devtools)
+devtools::install_github("jlvia1191/lsm")
+
+```
+
+
+
 
 Example Usage
 -------------
