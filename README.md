@@ -13,14 +13,14 @@ The saturated model is characterized by the assumptions 1 and 2 presented in sec
 References
 ----------
 
-\[1\] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models. Revista Colombiana De Estadistica,29(2), 242-244.
+[1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models. Revista Colombiana De Estadistica,29(2), 242-244.
 
-\[2\] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
+[2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
 
 Author(s)
 ---------
 
-Humberto Llinas Solano \[aut\], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas Cera \[aut\], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba Acevedo \[cre, aut\], Unicolombo, Cartagena-Colombia.
+Humberto Llinas Solano [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas Cera [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba Acevedo [cre, aut], Unicolombo, Cartagena-Colombia.
 
 Installation
 ------------
@@ -43,10 +43,10 @@ library(lsm)
   CHD <- c(0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0)
   
   data <- data.frame (CHD,  AGE )
-  lsm(CHD ~ AGE , data)
+  lsm(CHD ~ AGE, family = binomial, data)
 #> 
 #> Call:
-#> lsm(formula = CHD ~ AGE, data = data)
+#> lsm(formula = CHD ~ AGE, family = binomial, data = data)
 #> 
 #> Log_Likelihood: 
 #> [1] -4.257109
@@ -72,11 +72,11 @@ library(lsm)
  x10 <- c(5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8)
  
  data <- data.frame (y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
- lsm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10, data)
+ lsm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10, family = binomial, data)
 #> 
 #> Call:
 #> lsm(formula = y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + 
-#>     x10, data = data)
+#>     x10, family = binomial, data = data)
 #> 
 #> Log_Likelihood: 
 #> [1] -11.34303
@@ -86,10 +86,10 @@ library(lsm)
  
 ## For more ease, use the following notation.
  
- lsm(y ~., data)
+ lsm(y ~. , family = binomial, data)
 #> 
 #> Call:
-#> lsm(formula = y ~ ., data = data)
+#> lsm(formula = y ~ ., family = binomial, data = data)
 #> 
 #> Log_Likelihood: 
 #> [1] -11.34303
@@ -101,19 +101,18 @@ library(lsm)
 \# Other case.
 
 ``` r
+ y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
+ x1 <- as.factor(c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11))
+ x2 <- as.factor(c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12))
+ x3 <- as.factor(c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13))
+ x4 <- as.factor(c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2))
+ x5 <- as.factor(c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8))
 
-y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
-  x1 <- as.factor(c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11))
-  x2 <- as.factor(c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12))
-  x3 <- as.factor(c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13))
-  x4 <- as.factor(c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2))
-  x5 <- as.factor(c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8))
-
-   data <- data.frame (y, x1, x2, x3, x4, x5) 
-  lsm(y ~ x1 + x2 + x3 + x4 + x5, data)
+  data <- data.frame (y, x1, x2, x3, x4, x5) 
+  lsm(y ~ x1 + x2 + x3 + x4 + x5, family = binomial, data)
 #> 
 #> Call:
-#> lsm(formula = y ~ x1 + x2 + x3 + x4 + x5, data = data)
+#> lsm(formula = y ~ x1 + x2 + x3 + x4 + x5, family = binomial, data = data)
 #> 
 #> Log_Likelihood: 
 #> [1] -7.45472
@@ -123,10 +122,10 @@ y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
   
 ## For more ease, use the following notation.
   
-  lsm(y~., data)
+  lsm(y~., family = binomial, data)
 #> 
 #> Call:
-#> lsm(formula = y ~ ., data = data)
+#> lsm(formula = y ~ ., family = binomial, data = data)
 #> 
 #> Log_Likelihood: 
 #> [1] -7.45472
