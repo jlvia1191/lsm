@@ -80,6 +80,7 @@ library(lsm)
  data <- data.frame (y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
  ELAINYS <- lsm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10, family=binomial, data)
  summary(ELAINYS)
+ confint(ELAINYS1)
 ```
 
  # Other case.
