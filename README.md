@@ -86,15 +86,6 @@ library(lsm)
 
 ```{r}
 
-y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
-  x1 <-	as.factor(c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11))
-  x2 <-	as.factor(c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12))
-  x3 <-	as.factor(c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13))
-  x4 <-	as.factor(c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2))
-  x5 <-	as.factor(c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8))
 
-   data <- data.frame (y, x1, x2, x3, x4, x5) 
-  ELAINYS1 <- lsm(y ~ x1 + x2 + x3 + x4 + x5, family=binomial, data)
-  confint(ELAINYS1)
 ```
 
