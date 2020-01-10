@@ -6,6 +6,7 @@
 #' @param formula An expression of the form y ~ model, where y is the outcome variable (binary or dichotomous: its values are 0 or 1).
 #' @param family an optional funtion for example binomial.
 #' @param data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which \code{lsm()} is called.
+#' @param na.action  an optional NA.
 #' @return  \code{lsm} returns an object of class "\code{lsm}".
 #'
 #' An object of class "\code{lsm}" is a list containing at least the
@@ -87,7 +88,7 @@
 #'
 #' @export
 
-lsm <- function(formula, family, data)
+lsm <- function(formula, family=binomial, data, na.action)
 {
   mf <- model.frame(formula = formula, data = data)
   res <-do.call(rbind, (tapply(as.vector(mf[, 1]), t(apply((mf[, -1,drop =FALSE]), 1, paste0,collapse = "-")),function(x) c(z = sum(as.numeric(x)), n = length(as.numeric(x)),p = mean(as.numeric(x))))))
@@ -104,23 +105,42 @@ lsm <- function(formula, family, data)
   sj <- (res[, 1] * log(res[, 3]) + (res[, 2] - res[, 1]) * log(1 - res[, 3]))
   Lj <-ifelse((res[, 3]) == 0 | (res[, 3]) == 1, 0, sj)
   Sat <- sum (Lj)
-  #Lc <- ifelse(Math.factor(mf[, 1]) == 0,log(1-Math.factor(mf[, 1])),log(Math.factor(mf[, 1])))
+ 
   Com  <- 0 
-  Media <- mean(mf[, 1])
+  
+  y_n <- as.numeric_version(mf[,1])
+  y_n <- as.numeric(y_n)
+  Media <- mean(y_n)
   n <- length(mf[, 1])
+  
   Nul <- n*(Media*log(Media)+(1-Media)*log(1-Media))
   
+  data <- lapply(data, function(x){
+    if (is.factor(x)) 
+      x <- as.numeric_version(x) 
+    x <-  as.numeric(x)
+    return(x)
+  })
   coef <- coefficients(glm(formula, family , data))
   B <-as.matrix(coef)
-  X <- as.matrix(cbind(1,mf[,-1]))
+  
+  x_n <-  sapply(mf[,-1], function(x){
+    if (is.factor(x)) 
+      x <- as.numeric_version(x) 
+    x <-  as.numeric(x)
+    return(x)
+  })
+  x_n <- as.data.frame(x_n)
+  
+  X <- as.matrix(cbind(1,x_n))
   Bt <- as.matrix(coef)
-  g_t <- X%*%Bt
+  g_t <- X %*% Bt
   p_ <- function(g_){exp(g_t)/(1+exp(g_t))}
   p_t <- p_(g_t)
   q_i <- 1 - p_t
   q_i
   
-  Logi <- sum((mf[, 1]*log(p_t)+(1-mf[, 1])*log(q_i)))
+  Logi <- sum((y_n*log(p_t)+(1-y_n)*log(q_i)))
   
   I <- p_t * q_i 
   h <-as.vector(I)
@@ -166,16 +186,19 @@ lsm <- function(formula, family, data)
              Wald = W,
              p.valor = p_vz,
              ExpB = exb, 
+             ########################################
              obs = n,
              Df = length(coef)-1,
              B = B,
              X = X,
              Bt = Bt,
+             ########################################
              populations = J,
              log_lik_LOGT = Logi,
              log_Lik_SAT = Sat,
              log_Lik_COM = Com,
              log_Lik_NUL = Nul,
+             ########################################
              Deviuno = Dvu,
              Devidos = Dvd, 
              Devitres = Dvt,
@@ -185,11 +208,15 @@ lsm <- function(formula, family, data)
              p_vuno = p_vu,
              p_vdos = p_vd,
              p_vtres = p_vt,
+             ########################################
              logit = g_t,
+             p_gorro = p_t, 
+             ########################################
              z_j = as.matrix(zj), 
              n_j = nj,
              p_j = pj, 
              fitted.values = Lj, 
+             ########################################
              v_j = vj, 
              m_j = as.matrix(mj),
              V_j = Vj, 
@@ -208,7 +235,7 @@ print.lsm <- function(x, ...)
 {
  
   TB <- cbind(x$coefficients, x$Std_Error, x$ExpB, x$z, x$p.valor)
-  colnames(TB) <- c("coef", "Std. Error", "Exp(B)", "z by Wald", "P.value(>|z|)")
+  colnames(TB) <- c("Coef(B)", "Std.Error", "Exp(B)", "z.Wald", "2P(Z>|z|)")
   
   cat("\nCall:\n")
   print(x$call)
@@ -216,16 +243,15 @@ print.lsm <- function(x, ...)
   cat("\nEstimated Regression Model (Maximum Likelihood) \n")
   printCoefmat(TB, P.values=TRUE,has.Pvalue=TRUE)
   
-  cat("\nLikelihood Ratio Test=", x$Devidos, " on ", x$Df, " Df, p.value=", 1 -
-        pchisq(x$Devidos, x$Df), ", n=", x$obs, "\n", sep = "")
+ 
   
   
   cat("\nLog_Likelihood: \n")
   LL <- cbind(0, x$log_Lik_NUL, x$log_lik_LOGT, x$log_Lik_SAT)
-  dimnames(LL) <- list("Estimation",c("Full","Null","Logit","Saturate"))
+  dimnames(LL) <- list("Estimation",c("Complete","Null","Logit","Saturate"))
   print(t(LL))
   
-  cat("\nPopulations by saturate model:" ,x$populations,"\n\n", sep = "")
+  cat("\nPopulations in Saturate Model:" ,x$populations,"\n\n", sep = "")
  
 }
 
@@ -235,7 +261,7 @@ summary.lsm<- function(object, ...)
   TAB <- cbind(Deviance = c(object$Devidos,object$Deviuno,object$Devitres),
                Df = c(object$k,object$glu,object$glt),
                P.value = c(object$p_vdos,object$p_vuno,object$p_vtres))
-  row.names(TAB) <-c("Null_vs_Logit","Logit_vs_Full", "Logit_vs_Saturate")
+  row.names(TAB) <-c("Null_vs_Logit","Logit_vs_Complete", "Logit_vs_Saturate")
   
   res <- list(Call=object$call,
               anova=TAB)
@@ -248,7 +274,7 @@ print.summary.lsm <- function(x, ...)
 {
   cat("\nCall:\n")
   print(x$Call)
-  cat("\nAnalysis of Deviance: \n")
+  cat("\nAnalysis of Deviance (Chi-squared): \n")
   printCoefmat(x$anova, P.values=TRUE,has.Pvalue=TRUE)
 }
 
@@ -277,11 +303,19 @@ confint.lsm <-  function(object, parm, level =0.95, ...)
 #' @export
 print.confint.lsm<- function(x, ...)
 {
-  cat("\n95,0% confidence intervals for odds ratios \n")
+  cat("\n confidence intervals for coefficients %", "\n\n", sep = "")
   print(x$confint)
   
   cat("\n95,0% confidence intervals for odds ratios \n")
   print(x$ratios)
 }
 
+#' @export
+plot.lsm<- function(x, ...)
+{
+  xx <- x$X[,-1]
+  yy <- x$p_gorro
+  plot(x$X[,-1], yy, type = "l",main = "Plot of Fitted Model", ...)
+ 
+}
 
