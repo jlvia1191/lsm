@@ -91,8 +91,9 @@
 lsm <- function(formula, family=binomial, data, na.action)
 {
   mf <- model.frame(formula = formula, data = data)
-  res <-do.call(rbind, (tapply(as.vector(mf[, 1]), t(apply((mf[, -1,drop =FALSE]), 1, paste0,collapse = "-")),function(x) c(z = sum(as.numeric(x)), n = length(as.numeric(x)),p = mean(as.numeric(x))))))
-  zj<- res[, 1]
+  data1 <- data
+  res <- do.call(rbind, (tapply(as.vector(mf[, 1]), t(apply((mf[, -1,drop =FALSE]), 1, paste0,collapse = "-")),function(x) c(z = sum(as.numeric(x)), n = length(as.numeric(x)),p = mean(as.numeric(x))))))
+  zj <- res[, 1]
   nj <- res[, 2]
   pj <- res[, 3]
   vj <- pj * (1 - pj)
@@ -103,7 +104,7 @@ lsm <- function(formula, family=binomial, data, na.action)
   ip <- diag(nj / vj)
   Zj <- (zj - nj * pj) / sqrt(nj * vj)
   sj <- (res[, 1] * log(res[, 3]) + (res[, 2] - res[, 1]) * log(1 - res[, 3]))
-  Lj <-ifelse((res[, 3]) == 0 | (res[, 3]) == 1, 0, sj)
+  Lj <- ifelse((res[, 3]) == 0 | (res[, 3]) == 1, 0, sj)
   Sat <- sum (Lj)
  
   Com  <- 0 
@@ -113,16 +114,16 @@ lsm <- function(formula, family=binomial, data, na.action)
   Media <- mean(y_n)
   n <- length(mf[, 1])
   
-  Nul <- n*(Media*log(Media)+(1-Media)*log(1-Media))
+  Nul <- n * (Media * log(Media) + (1 - Media) * log(1 - Media))
   
-  data <- lapply(data, function(x){
+  data1 <- lapply(data, function(x){
     if (is.factor(x)) 
       x <- as.numeric_version(x) 
     x <-  as.numeric(x)
     return(x)
   })
-  coef <- coefficients(glm(formula, family , data))
-  B <-as.matrix(coef)
+  coef <- coefficients(glm(formula, family , data1))
+  B <- as.matrix(coef)
   
   x_n <-  sapply(mf[,-1], function(x){
     if (is.factor(x)) 
@@ -138,47 +139,44 @@ lsm <- function(formula, family=binomial, data, na.action)
   p_ <- function(g_){exp(g_t)/(1+exp(g_t))}
   p_t <- p_(g_t)
   q_i <- 1 - p_t
-  q_i
   
-  Logi <- sum((y_n*log(p_t)+(1-y_n)*log(q_i)))
+  Logi <- sum((y_n * log(p_t) + (1 - y_n) * log(q_i)))
   
   I <- p_t * q_i 
-  h <-as.vector(I)
-  V <- diag(h,length(h))
+  h <- as.vector(I)
+  V <- diag(h, length(h))
   
-  o <-(t(X)%*% V %*%X)
-  varB <-solve(o)
-  SEBj <-(diag(varB))^(1/2) 
-  W <- t(B)%*%o%*%B
+  o <-(t(X) %*% V %*% X)
+  varB <- solve(o)
+  SEBj <- (diag(varB))^(1/2) 
+  W <- t(B) %*% o %*% B
   z <- coef/SEBj
-  p_vz =2*pnorm(abs(z), lower.tail=FALSE)
-  exb = exp(coef)
-  OR = exp(coef[2])
-  
+  p_vz <- 2*pnorm(abs(z), lower.tail=FALSE)
+  exb <- exp(coef)
+  OR <- exp(coef[2])
   
   #Comparativo de Modelos#
   
   #Logístico vs Completo#
   k <-1
-  Dvu <- 2*(Com-Logi)
-  gu <- (n-(k+1))
+  Dvu <- 2*(Com - Logi)
+  gu <- (n-(k + 1))
   p_vu <- pchisq(c(Dvu), df=gu, lower.tail=FALSE)
   #Decisi1<-ifelse(p_val1<0.05,"Se rechaza H_0","No se rechaza H_0")
   
   #Nulo vs Logístico#
-  Dvd <- 2*(Logi-Nul)
+  Dvd <- 2*(Logi - Nul)
   p_vd <- pchisq(c(Dvd), df=k, lower.tail=FALSE)
   #Decisi<-ifelse(p_val<0.05,"Se rechaza H_0","No se rechaza H_0")
   
   #Logítico vs Saturado#
   J <- length(res) / 3
   Dvt <- 2*(Sat - Logi)
-  gt <- (J-(k+1))
+  gt <- (J-(k + 1))
   p_vt <- pchisq(c(Dvt), df=gt, lower.tail=FALSE)
   #Decisi2<-ifelse(p_val2<0.05,"Se rechaza H_0","No se rechaza H_0")
-  
- 
-  Ela <-list(coefficients = coef,
+
+  Ela <- list(coefficients = coef,
              z=z,
              mcov = varB,
              mcor= cor(varB),
@@ -233,7 +231,6 @@ lsm <- function(formula, family=binomial, data, na.action)
 #' @export
 print.lsm <- function(x, ...)
 {
- 
   TB <- cbind(x$coefficients, x$Std_Error, x$ExpB, x$z, x$p.valor)
   colnames(TB) <- c("Coef(B)", "Std.Error", "Exp(B)", "z.Wald", "2P(Z>|z|)")
   
@@ -241,30 +238,25 @@ print.lsm <- function(x, ...)
   print(x$call)
  
   cat("\nEstimated Regression Model (Maximum Likelihood) \n")
-  printCoefmat(TB, P.values=TRUE,has.Pvalue=TRUE)
-  
- 
-  
+  printCoefmat(TB, P.values=TRUE, has.Pvalue=TRUE)
   
   cat("\nLog_Likelihood: \n")
   LL <- cbind(0, x$log_Lik_NUL, x$log_lik_LOGT, x$log_Lik_SAT)
-  dimnames(LL) <- list("Estimation",c("Complete","Null","Logit","Saturate"))
+  dimnames(LL) <- list("Estimation", c("Complete", "Null", "Logit", "Saturate"))
   print(t(LL))
   
-  cat("\nPopulations in Saturate Model:" ,x$populations,"\n\n", sep = "")
- 
+  cat("\nPopulations in Saturate Model: ", x$populations, "\n\n", sep = "")
 }
 
 #' @export
-summary.lsm<- function(object, ...)
+summary.lsm <- function(object, ...)
 {
-  TAB <- cbind(Deviance = c(object$Devidos,object$Deviuno,object$Devitres),
-               Df = c(object$k,object$glu,object$glt),
-               P.value = c(object$p_vdos,object$p_vuno,object$p_vtres))
-  row.names(TAB) <-c("Null_vs_Logit","Logit_vs_Complete", "Logit_vs_Saturate")
+  TAB <- cbind(Deviance = c(object$Devidos, object$Deviuno, object$Devitres),
+               Df = c(object$k, object$glu, object$glt),
+               P.value = c(object$p_vdos, object$p_vuno, object$p_vtres))
+  row.names(TAB) <-c("Null_vs_Logit", "Logit_vs_Complete", "Logit_vs_Saturate")
   
-  res <- list(Call=object$call,
-              anova=TAB)
+  res <- list(Call = object$call, anova=TAB)
   class(res) <- "summary.lsm"
   return(res)
 }
@@ -275,7 +267,7 @@ print.summary.lsm <- function(x, ...)
   cat("\nCall:\n")
   print(x$Call)
   cat("\nAnalysis of Deviance (Chi-squared): \n")
-  printCoefmat(x$anova, P.values=TRUE,has.Pvalue=TRUE)
+  printCoefmat(x$anova, P.values=TRUE, has.Pvalue=TRUE)
 }
 
 #' @export
@@ -288,34 +280,26 @@ confint.lsm <-  function(object, parm, level =0.95, ...)
     }
   
   alpha <- 1 - level
-  z <- qnorm(1-alpha/2)
-  li = object$coefficients - z*object$Std_Error
-  ls = object$coefficients + z*object$Std_Error
-  ret<-cbind(li, ls)
-  colnames(ret)<-c("lower","upper")
-  odds<-cbind(exp(li[-1]), exp(ls[-1]))
-  colnames(odds)<-c("lower","upper")
-  sal <- list(confint=ret,ratios=odds,level*100)
+  z <- qnorm(1 - alpha/2)
+  li <- object$coefficients - z*object$Std_Error
+  ls <- object$coefficients + z*object$Std_Error
+  ret <- cbind(li, ls)
+  colnames(ret) <- c("lower", "upper")
+  odds <- cbind(exp(li[-1]), exp(ls[-1]))
+  colnames(odds) <- c("lower", "upper")
+  sal <- list(confint=ret, ratios=odds, level = level*100)
   class(sal) <- "confint.lsm"
   print(sal)
 }
 
 #' @export
-print.confint.lsm<- function(x, ...)
+print.confint.lsm <- function(x, ...)
 {
-  cat("\n confidence intervals for coefficients %", "\n\n", sep = "")
+  cat("\n  Confidence intervals for coefficients ", x$level, ",0%", "\n\n", sep = "")
   print(x$confint)
-  
-  cat("\n95,0% confidence intervals for odds ratios \n")
+ 
+  cat("\n Confidence intervals for odds ratios ", x$level,  ",0%", "\n\n", sep = "")
   print(x$ratios)
 }
 
-#' @export
-plot.lsm<- function(x, ...)
-{
-  xx <- x$X[,-1]
-  yy <- x$p_gorro
-  plot(x$X[,-1], yy, type = "l",main = "Plot of Fitted Model", ...)
- 
-}
 
