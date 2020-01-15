@@ -11,81 +11,114 @@
 #'
 #' An object of class "\code{lsm}" is a list containing at least the
 #'  following components:
+#'  
+#' \item{coefficients}{Vector of coefficients estimations.} 
 #'
-#' \item{log_Likelihood}{Estimation of the log likelihood.}
+#' \item{Std.Error}{Vector of the coefficients’s standard error.} 
 #'
-#' \item{populations}{Total number \code{J} of populations in the model.}
+#' \item{Exp(B)}{Vector with the exponential of the coefficients.} 
 #'
-#' \item{z_j}{Value of \code{Zj} (the sum of the observations in the \code{jth} population).}
+#' \item{Wald}{Value of the Wald statistic.} 
 #'
-#' \item{n_j}{Number of the observations in the \code{jth} population.}
+#' \item{D.f}{Degree of freedom for the Chi-squared distribution.} 
 #'
-#' \item{p_j}{Estimation of \code{pj} in the \code{jth} population.}
+#' \item{ P.value}{P-value with the Chi-squared distribution. } 
 #'
-#' \item{fitted.values}{Value of the log_Likelihood in the \code{jth} population.}
+#' \item{Log_Lik_Complete}{Estimation of the log likelihood in the complete model.} 
 #'
-#' \item{v_j}{Variance of the Bernoulli variables in the \code{jth} population.}
+#' \item{Log_Lik_Null}{Estimation of the log likelihood in the null model.} 
 #'
-#' \item{m_j}{Expected value of \code{Zj}.}
+#' \item{Log_Lik_Logit}{Estimation of the log likelihood in the logistic model.} 
 #'
-#' \item{V_j}{Variance of \code{Zj}.}
+#' \item{Log_Lik_Saturate}{Estimation of the log likelihood in the saturate model.} 
+#'
+#' \item{Populations}{Number of populations in the saturated model.} 
+#'
+#' \item{Dev_Null_vs_Logit }{Value of the test statistic  (Hypothesis: null vs logistic models).} 
+#'
+#' \item{Dev_Logit_vs_Complete}{ Value of the test statistic  (Hypothesis:  logistic vs complete models).} 
+#'
+#' \item{Dev_Logit_vs_Saturate}{ Value of the test statistic  (Hypothesis: logistic vs saturated models).} 
+#'
+#' \item{Df_Null_vs_Logit }{Degree of freedom for the test statistic’s distribution (Hypothesis: null vs logistic models).} 
+#'
+#' \item{Df_Logit_vs_Complete }{ Degree of freedom for the test statistic’s distribution (Hypothesis: logistic vs saturated models).} 
+#'
+#'\item{Df_Logit_vs_Saturate}{ Degree of freedom for the test statistic’s distribution (Hypothesis: Logistic vs saturated models)} 
+#'
+#' \item{P.v_Null_vs_Logit}{\code{p-values} for the hypothesis test: null vs logistic models.} 
+#'
+#' \item{P.v_Logit_vs_Complete }{\code{p-values} for the hypothesis test:  logistic vs complete models.} 
+#'
+#' \item{P.v_Logit_vs_Saturate}{}{\code{p-values} for the hypothesis test: logistic vs saturated models.} 
+#'
+#' \item{Logit}{Estimation of the logit function (the log-odds)} 
+#'
+#' \item{p_hat}{Estimation of the probability that the outcome variable takes the value 1, given one population} 
+#'
+#' \item{fitted.values}{Vector with the values of the log_Likelihood in each \code{jth} population.}
+#'
+#' \item{z_j}{Vector with the values of each \code{Zj} (the sum of the observations in the \code{jth} population).}
+#'
+#' \item{n_j}{Vector with the \code{nj} (the number of the observations in each \code{jth} population).}
+#'
+#' \item{p_j}{Vector with the estimation of each \code{pj} (the probability of success in the \code{jth} population).}
+#'
+#' \item{v_j}{Vector with the variance of the Bernoulli variables in the \code{jth} population.}
+#'
+#' \item{m_j}{Vector with the expected values of \code{Zj} in the \code{jth} population.}
+#'
+#' \item{V_j}{Vector with the variances of \code{Zj} in the \code{jth} population.}
 #'
 #' \item{V}{Variance and covariance matrix of \code{Z}, the vector that contains all the \code{Zj}.}
 #'
-#' \item{S_p}{Score vector of the model.}
+#' \item{S_p}{Score vector in the saturated model.}
 #'
-#' \item{I_p}{Information matrix of the model.}
+#' \item{I_p}{Information matrix in the saturated model.}
 #'
-#' \item{Zast_j}{Standardized variable of \code{Zj}.}
+#' \item{Zast_j}{Vector with the values of the standardized variable of \code{Zj}.}
 #'
 #' @details The saturated model is characterized by the assumptions 1 and 2 presented in section 2.3 by Llinas (2006, ISSN:2389-8976).
 #' @references [1] Humberto Jesus Llinas. (2006). Accuracies in the theory of the logistic models. Revista Colombiana De Estadistica,29(2), 242-244.
 #' @references [2] Hosmer, D. (2013). Wiley Series in Probability and Statistics Ser. : Applied Logistic Regression (3). New York: John Wiley & Sons, Incorporated.
+#' @references [3] Chambers, J. M. and Hastie, T. J. (1992) Statistical Models in S. Wadsworth & Brooks/Cole.
 #' @author Humberto Llinas Solano [aut], Universidad del Norte, Barranquilla-Colombia \\ Omar Fabregas Cera [aut], Universidad del Norte, Barranquilla-Colombia \\ Jorge Villalba Acevedo [cre, aut], Cartagena-Colombia.
 #'@examples
 #' # Hosmer, D. (2013) page 3: Age and coranary Heart Disease (CHD) Status of 20 subjects:
 #'
-#' AGE <- c(20, 23, 24, 25, 25, 26, 26, 28, 28, 29, 30, 30, 30, 30, 30, 30, 30, 32, 33, 33)
-#' CHD <- c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0)
+#' library(lsm)
 #'
-#'  data <- data.frame (CHD, AGE)
-#'  lsm(CHD ~ AGE , family = binomial,  data)
+#' AGE <- c(20,23,24,25,25,26,26,28,28,29,30,30,30,30,30,30,30,32,33,33)
+#' CHD <- c(0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0)
+#'
+#' data <- data.frame (CHD,  AGE )
+#' lsm(CHD ~ AGE , family=binomial, data)
+#'
+#' ## For more ease, use the following notation.
+#'
+#' lsm(y~., data)
 #'
 #' # Other case.
 #'
-#'  y <- c(0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1)
-#'  x1 <- c(2, 2, 2, 2, 2, 5, 5, 5, 5, 6, 6, 6, 8, 8, 11, 11, 11, 1)
-#'  x2 <- c(3, 3, 3, 3, 3, 6, 6, 6, 6, 8, 8, 8, 9, 9, 12, 12, 12, 12)
-#'  x3 <- c(4, 4, 4, 4, 4, 7, 7, 7, 7, 9, 9, 9, 10, 10, 13, 13, 13, 13)
-#'  x4 <- c(1, 1, 1, 1, 1, 9, 9, 9, 9, 10, 10, 10, 4, 4, 2, 2, 2, 2)
-#'  x5 <- c(32, 32, 32, 32, 32, 20, 20, 20, 20, 21, 21, 21, 19, 19, 16, 16, 16, 16)
-#'  x6 <- c(15, 15, 15, 15, 15, 18, 18, 18, 18, 16, 16, 16, 25, 25, 20, 20, 20, 20)
-#'  x7 <- c(28, 28, 28, 28, 28, 23, 23, 23, 23, 32, 32, 32, 24, 24, 32, 32, 32, 32)
-#'  x8 <- c(0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0)
-#'  x9 <- c(6, 6, 6, 6, 6, 10, 10, 10, 10, 11, 11, 11, 7, 7, 21, 21, 21, 21)
-#'  x10 <- c(5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8)
+#' y <- c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1)
+#' x1 <- c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11)
 #'
-#'  data <- data.frame (y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
-#'  lsm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10, family = binomial, data)
+#' data <- data.frame (y, x1)
+#' ELAINYS <-lsm(y ~ x1, family=binomial, data)
+#' summary(ELAINYS)
 #'
-#' ## For more ease, use the following notation.
-#'  lsm(y~., family = binomial, data)
 #'
-#' ## Other case.
+#' # Other case.
 #'
-#'   y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
-#'  x1 <- as.factor(c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11))
-#'  x2 <- as.factor(c(3, 3, 3, 6, 6, 6, 6, 9, 9, 12, 12, 12))
-#'  x3 <- as.factor(c(4, 4, 4, 7, 7, 7, 7, 10, 10, 13, 13, 13))
-#'  x4 <- as.factor(c(1, 1, 1, 9, 9, 9, 9, 4, 4, 2, 2, 2))
-#'  x5 <- as.factor(c(5, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8))
 #'
-#'  data <- data.frame (y, x1, x2, x3, x4, x5)
-#'  lsm(y ~ x1 + x2 + x3 + x4 + x5, family = binomial, data)
 #'
-#' ## For more ease, use the following notation.
-#'  lsm(y~. , family = binomial, data)
+#' y <- as.factor(c(1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1))
+#' x1 <- as.factor(c(2, 2, 2, 5, 5, 5, 5, 8, 8, 11, 11, 11))
 #'
+#' data <- data.frame (y, x1)
+#' ELAINYS1 <-lsm(y ~ x1, family=binomial, data)
+#' confint(ELAINYS1)
+#' 
 #' @export
 
 lsm <- function(formula, family=binomial, data, na.action)
@@ -100,22 +133,19 @@ lsm <- function(formula, family=binomial, data, na.action)
   mj <- nj * pj
   Vj <- nj * vj
   V <- diag(vj)
+  ####################################################
   sp <- as.matrix((zj - nj * pj)/ vj)
   ip <- diag(nj / vj)
   Zj <- (zj - nj * pj) / sqrt(nj * vj)
   sj <- (res[, 1] * log(res[, 3]) + (res[, 2] - res[, 1]) * log(1 - res[, 3]))
   Lj <- ifelse((res[, 3]) == 0 | (res[, 3]) == 1, 0, sj)
   Sat <- sum (Lj)
- 
   Com  <- 0 
-  
   y_n <- as.numeric_version(mf[,1])
   y_n <- as.numeric(y_n)
   Media <- mean(y_n)
   n <- length(mf[, 1])
-  
   Nul <- n * (Media * log(Media) + (1 - Media) * log(1 - Media))
-  
   data1 <- lapply(data, function(x){
     if (is.factor(x)) 
       x <- as.numeric_version(x) 
@@ -124,7 +154,6 @@ lsm <- function(formula, family=binomial, data, na.action)
   })
   coef <- coefficients(glm(formula, family , data1))
   B <- as.matrix(coef)
-  
   x_n <-  sapply(mf[,-1], function(x){
     if (is.factor(x)) 
       x <- as.numeric_version(x) 
@@ -139,19 +168,19 @@ lsm <- function(formula, family=binomial, data, na.action)
   p_ <- function(g_){exp(g_t)/(1+exp(g_t))}
   p_t <- p_(g_t)
   q_i <- 1 - p_t
-  
   Logi <- sum((y_n * log(p_t) + (1 - y_n) * log(q_i)))
-  
+  #########################################
   I <- p_t * q_i 
   h <- as.vector(I)
   V <- diag(h, length(h))
-  
   o <-(t(X) %*% V %*% X)
   varB <- solve(o)
-  SEBj <- (diag(varB))^(1/2) 
+  SEBj <- (diag(varB))^(1/2)
   W <- t(B) %*% o %*% B
-  z <- coef/SEBj
-  p_vz <- 2*pnorm(abs(z), lower.tail=FALSE)
+  z <- (coef/SEBj)^2
+  #p_vz <- 2*pnorm(abs(z), lower.tail=FALSE)
+  d_f <- (rep(1, length(z)))
+  P_valor <- 1 - pchisq(z, d_f)
   exb <- exp(coef)
   OR <- exp(coef[2])
   
@@ -177,51 +206,45 @@ lsm <- function(formula, family=binomial, data, na.action)
   #Decisi2<-ifelse(p_val2<0.05,"Se rechaza H_0","No se rechaza H_0")
 
   Ela <- list(coefficients = coef,
-             z=z,
-             mcov = varB,
-             mcor= cor(varB),
-             Std_Error = SEBj,
-             Wald = W,
-             p.valor = p_vz,
-             ExpB = exb, 
-             ########################################
-             obs = n,
-             Df = length(coef)-1,
-             B = B,
-             X = X,
-             Bt = Bt,
-             ########################################
-             populations = J,
-             log_lik_LOGT = Logi,
-             log_Lik_SAT = Sat,
-             log_Lik_COM = Com,
-             log_Lik_NUL = Nul,
-             ########################################
-             Deviuno = Dvu,
-             Devidos = Dvd, 
-             Devitres = Dvt,
-             glu = gu,
-             k = k,
-             glt = gt,
-             p_vuno = p_vu,
-             p_vdos = p_vd,
-             p_vtres = p_vt,
-             ########################################
-             logit = g_t,
-             p_gorro = p_t, 
-             ########################################
-             z_j = as.matrix(zj), 
-             n_j = nj,
-             p_j = pj, 
-             fitted.values = Lj, 
-             ########################################
-             v_j = vj, 
-             m_j = as.matrix(mj),
-             V_j = Vj, 
-             V = V,
-             S_p = sp, 
-             I_p = ip, 
-             Zast_j = as.matrix(Zj))
+              Std.Error = SEBj,
+              ExpB = exb,
+              Wald = z,
+              D.f = d_f,
+              P.value = P_valor,
+              ############################################
+              Log_Lik_Complete = Com,
+              Log_Lik_Null  = Nul,
+              Log_Lik_Logit = Logi,
+              Log_Lik_Saturate = Sat,
+              Populations = J,
+              ########################################
+              Dev_Null_vs_Logit  = Dvd,
+              Dev_Logit_vs_Complete = Dvu,
+              Dev_Logit_vs_Saturate = Dvt,
+              Df_Null_vs_Logit = k,
+              Df_Logit_vs_Complete = gu,
+              Df_Logit_vs_Saturate = gt,
+              P.v_Null_vs_Logit = p_vd,
+              P.v_Logit_vs_Complete = p_vu,
+              P.v_Logit_vs_Saturate = p_vt,
+              ########################################
+              Logit = g_t,
+              p_hat = p_t, 
+              ########################################
+              z_j = as.matrix(zj), 
+              n_j = nj,
+              p_j = pj, 
+              fitted.values = Lj, 
+              ########################################
+              mcov = varB,
+              mcor = cor(varB),
+              v_j = vj, 
+              m_j = as.matrix(mj),
+              V_j = Vj, 
+              V = V,
+              S_p = sp, 
+              I_p = ip, 
+              Zast_j = as.matrix(Zj))
   
   Ela$call <- match.call()
   class(Ela) <- "lsm"
@@ -231,8 +254,8 @@ lsm <- function(formula, family=binomial, data, na.action)
 #' @export
 print.lsm <- function(x, ...)
 {
-  TB <- cbind(x$coefficients, x$Std_Error, x$ExpB, x$z, x$p.valor)
-  colnames(TB) <- c("Coef(B)", "Std.Error", "Exp(B)", "z.Wald", "2P(Z>|z|)")
+  TB <- cbind(x$coefficients, x$Std.Error,  x$ExpB, x$Wald, x$D.f, x$P.value)
+  colnames(TB) <- c("Coef(B)", "Std.Error", "Exp(B)", "Wald", "D.f",  "P.value")
   
   cat("\nCall:\n")
   print(x$call)
@@ -241,19 +264,19 @@ print.lsm <- function(x, ...)
   printCoefmat(TB, P.values=TRUE, has.Pvalue=TRUE)
   
   cat("\nLog_Likelihood: \n")
-  LL <- cbind(0, x$log_Lik_NUL, x$log_lik_LOGT, x$log_Lik_SAT)
+  LL <- cbind(x$Log_Lik_Complete, x$Log_Lik_Null, x$Log_Lik_Logit, x$Log_Lik_Saturate)
   dimnames(LL) <- list("Estimation", c("Complete", "Null", "Logit", "Saturate"))
   print(t(LL))
   
-  cat("\nPopulations in Saturate Model: ", x$populations, "\n\n", sep = "")
+  cat("\nPopulations in Saturate Model: ", x$Populations, "\n\n", sep = "")
 }
 
 #' @export
 summary.lsm <- function(object, ...)
 {
-  TAB <- cbind(Deviance = c(object$Devidos, object$Deviuno, object$Devitres),
-               Df = c(object$k, object$glu, object$glt),
-               P.value = c(object$p_vdos, object$p_vuno, object$p_vtres))
+  TAB <- cbind(Deviance = c(object$Dev_Null_vs_Logit, object$Dev_Logit_vs_Complete, object$Dev_Logit_vs_Saturate),
+               D.f = c(object$Df_Logit_vs_Complete, object$Df_Logit_vs_Complete, object$Df_Logit_vs_Saturate),
+               P.value = c(object$P.v_Null_vs_Logit, object$P.v_Logit_vs_Complete, object$P.v_Logit_vs_Saturate))
   row.names(TAB) <-c("Null_vs_Logit", "Logit_vs_Complete", "Logit_vs_Saturate")
   
   res <- list(Call = object$call, anova=TAB)
@@ -281,8 +304,8 @@ confint.lsm <-  function(object, parm, level =0.95, ...)
   
   alpha <- 1 - level
   z <- qnorm(1 - alpha/2)
-  li <- object$coefficients - z*object$Std_Error
-  ls <- object$coefficients + z*object$Std_Error
+  li <- object$coefficients - z*object$Std.Error
+  ls <- object$coefficients + z*object$Std.Error
   ret <- cbind(li, ls)
   colnames(ret) <- c("lower", "upper")
   odds <- cbind(exp(li[-1]), exp(ls[-1]))
@@ -295,10 +318,10 @@ confint.lsm <-  function(object, parm, level =0.95, ...)
 #' @export
 print.confint.lsm <- function(x, ...)
 {
-  cat("\n  Confidence intervals for coefficients ", x$level, ",0%", "\n\n", sep = "")
+  cat( x$level, ".0%", " confidence intervals for coefficients ", "\n", sep = "")
   print(x$confint)
  
-  cat("\n Confidence intervals for odds ratios ", x$level,  ",0%", "\n\n", sep = "")
+  cat("\n", x$level, ".0%", " confidence intervals for odds ratios","\n",   sep = "")
   print(x$ratios)
 }
 
