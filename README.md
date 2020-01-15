@@ -29,7 +29,7 @@ Humberto Llinas Solano \[aut\], Universidad del Norte, Barranquilla-Colombia \\ 
 Installation
 ------------
 
-```` {r}
+```{r}
 library(devtools)
 install_github("jlvia1191/lsm")
 ```
